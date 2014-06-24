@@ -70,9 +70,6 @@ module.exports = function(grunt) {
             },
             'delete-python-vendor-directory': {
                 command: 'rm -rf vendor/'
-            },
-            'push-google-remote': {
-                command: 'git push code.google.com master'
             }
         },
         gae: {
