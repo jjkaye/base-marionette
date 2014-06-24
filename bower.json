@@ -1,6 +1,6 @@
 {
   "name": "UseAllFive/base-marionette",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "bower.json",
   "dependencies": {
     "backbone": "~1.1.2",
