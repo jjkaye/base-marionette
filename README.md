@@ -75,6 +75,7 @@ Master will now be ahead of development because of the merge commit. Development
     * Can get it from top left here: https://www.browserstack.com/automate
 - Run the proxy executable and keep it running in seperate terminal session
     * For example I do: ```~/installs/BrowserStackLocal -v $BROWSERSTACK_KEY localhost,12080,0```
+        * This starts a proxy to localhost, only for port 12080, without SSL enabled
     * I've aliased this by adding something like this to my .bashrc
         * ```alias testproxy='~/installs/BrowserStackLocal -v $BROWSERSTACK_KEY localhost,12080,0'```
 - In app root run ```mocha -R spec test```
