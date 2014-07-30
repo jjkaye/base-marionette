@@ -2,6 +2,7 @@
 'use strict';
 
 var assert = require('assert');
+var testConfig = require('./test_config');
 
 var webdriver = require('browserstack-webdriver');
 var test = require('browserstack-webdriver/testing');
@@ -25,7 +26,7 @@ test.describe('Base Marionette', function() {
     });
 
     test.it('Should find the example region rendered on the page', function() {
-        var url = 'http://localhost:' + process.env.BROWSERSTACK_PORT;
+        var url = 'http://localhost:' + testConfig.port;
         driver.get(url);
         driver.wait(function() {
             return driver.findElement(webdriver.By.className('example-region')).then(function(elements) {
