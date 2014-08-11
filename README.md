@@ -62,22 +62,15 @@ Master will now be ahead of development because of the merge commit. Development
 
 ## Testing
 ### Set up BrowserStack
-- Export BrowserStack creds as env variables ... for example in my bashrc I have:
-    * ```export BROWSERSTACK_USER=travisglines1```
-    * ```export BROWSERSTACK_KEY=ry7rcSN4xspxxpqDh9zK```
-    * ```export BROWSERSTACK_PORT=12080```
-- Install mocha globally - this will give you the mocha command
-    * ```npm install -g mocha```
-    * Exposes globals like describe inside you test javascript
-- Download the proxy executable and unpack it somewhere in your path or know where to get it from
-    * Download from: https://www.browserstack.com/local-testing#command-line
-- Set your username and access key and replace in test file
-    * Can get it from top left here: https://www.browserstack.com/automate
-- Run the proxy executable and keep it running in seperate terminal session
-    * For example I do: ```~/installs/BrowserStackLocal -v $BROWSERSTACK_KEY localhost,12080,0```
-    * I've aliased this by adding something like this to my .bashrc
-        * ```alias testproxy='~/installs/BrowserStackLocal -v $BROWSERSTACK_KEY localhost,12080,0'```
-- In app root run ```mocha -R spec test```
+- Install node dependencies with `npm install`.
+- Install frontend dependencies with `bower install`.
+- Create `config/project_user_specific.yml`.
+    * Copy `config/project_user_specific.yml.sample` to
+      `config/project_user_specific.yml` and fill out the `browserstackName`
+      and `browserstackKey`. If you want to use a custom `port` or `url`,
+      then add those as well. If you do not add `port` and/or `url`, then
+      the values from `project.yml` will be used.
+- Run tests by running `npm test`.
 - Notes:
     * Useful selenium examples: https://code.google.com/p/selenium/wiki/WebDriverJs
     * Initial test only set up to run on firefox but we'll change that
