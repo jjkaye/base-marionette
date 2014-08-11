@@ -1,0 +1,3 @@
+default:
+    browserstackKey: your-browserstack-key
+    browserstackUser: your-browserstack-user

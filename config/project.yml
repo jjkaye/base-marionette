@@ -1,0 +1,4 @@
+default:
+    liveReloadPort: 35740
+    port: 12080
+    url: localhost

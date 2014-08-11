@@ -10,6 +10,8 @@ matchdep = require('matchdep');
 chalk = require('chalk');
 
 module.exports = function(grunt) {
+    var PROJECT_CONFIGURATION_PATH = 'config/project.yml';
+    var USER_SPECIFIC_PROJECT_CONFIGURATION_PATH = 'config/project_user_specific.yml';
 
     var config;
     var deployTasks;
@@ -17,6 +19,7 @@ module.exports = function(grunt) {
     var isDevLintTask;
     var isDevTasks;
     var pkg;
+    var projectConfig;
     var urls;
     var username = process.env.UA5_USER || process.env.USER || 'unknown_user';
     var watchJavascriptFiles = [];
@@ -24,6 +27,23 @@ module.exports = function(grunt) {
         src: [],
         dest: []
     };
+
+    if (!grunt.file.exists(PROJECT_CONFIGURATION_PATH)) {
+        grunt.fail.fatal('No project configuration was found.');
+    } else {
+        projectConfig = grunt.file.readYAML(PROJECT_CONFIGURATION_PATH)['default'];
+
+        if (grunt.file.exists(USER_SPECIFIC_PROJECT_CONFIGURATION_PATH)) {
+            // Wrap in an IIFE so we don't have to create
+            // `userSpecificProjectConfig` with big scope.
+            (function() {
+                var userSpecificProjectConfig;
+
+                userSpecificProjectConfig = grunt.file.readYAML(USER_SPECIFIC_PROJECT_CONFIGURATION_PATH)['default'];
+                projectConfig = _.defaults(userSpecificProjectConfig, projectConfig);
+            })();
+        }
+    }
 
     pkg = grunt.file.readJSON('package.json');
     config = grunt.file.readYAML('config/grunt.yml').config;
@@ -291,7 +311,7 @@ module.exports = function(grunt) {
             },
             livereload: {
                 options: {
-                    livereload: config.liveReloadPort
+                    livereload: projectConfig.liveReloadPort
                 },
                 files: [].concat(
                     'web/css/main.css',
@@ -330,7 +350,7 @@ module.exports = function(grunt) {
         };
 
         if (isDevTasks) {
-            grunt.file.write(filename, generateLiveReload(config.liveReloadPort));
+            grunt.file.write(filename, generateLiveReload(projectConfig.liveReloadPort));
             grunt.log.writeln('File ' + chalk.cyan(filename) + ' created');
         } else {
             grunt.file.write(filename, '');

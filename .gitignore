@@ -19,4 +19,5 @@
 /web/css/main.css
 /web/docs
 /web/vendor
+config/project_user_specific.yml
 livereload.js
