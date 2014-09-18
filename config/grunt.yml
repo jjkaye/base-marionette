@@ -22,7 +22,6 @@ config:
         scss:
             loadPaths:
               - web/css
-              - web/css/site
               - web/vendor
               - web/vendor/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap
               - web/vendor/bourbon/dist
