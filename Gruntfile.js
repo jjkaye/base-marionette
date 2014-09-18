@@ -81,7 +81,7 @@ module.exports = function(grunt) {
                 command: 'rm -rf vendor/'
             },
             'write-scss-import-file': {
-                command: 'find web/css -type f | awk \'{ printf "@import \'%s\';\n", $1 }\' | sed "s/web\/css\/\//g" | sed \'/main.css.map/d\' | sed "s/.scss//g" > web/css/application.scss'
+                command: './scssImport.sh'
             }
         },
         gae: {
