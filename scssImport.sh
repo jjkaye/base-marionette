@@ -8,15 +8,25 @@
 # sed "s/.scss//g" > \                                Remove the .scss file extension from includes
 # web/css/application.scss                            Write out to application.scss and overwrite what's there
 
+NEWLINE=$'\n'
+
 VENDOR_FILES=$'@import \'_normalize\';\n@import \'_bourbon\';\n'
+
+UTILITY_FILES=$( \
+find web/css/utilities -type f | \
+awk '{ printf "@import \x27%s\x27;\n", $1 }' | \
+sed "s/web\/css\///g" | \
+sed "s/.scss//g" \
+)
 
 SCSS_FILES=$( \
 find web/css -type f | \
 awk '{ printf "@import \x27%s\x27;\n", $1 }' | \
 sed "s/web\/css\///g" | \
 grep -v application.scss | \
+grep -v utilities | \
 grep -v "\.css" | \
 sed "s/.scss//g" \
 )
 
-echo "$VENDOR_FILES""$SCSS_FILES" > web/css/application.scss
+echo "$VENDOR_FILES""$UTILITY_FILES""$NEWLINE""$SCSS_FILES" > web/css/application.scss
