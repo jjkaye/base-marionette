@@ -28,7 +28,8 @@
     "polyfillLocationOrigin": "~0.1.1",
     "marionette.babyBird": "^0.4.0",
     "marionette.regionChildCloseEvent": "~0.0.4",
-    "marionette.enhancedController": "^1.0.3"
+    "marionette.enhancedController": "^1.0.3",
+    "marionette.googleAnalyticsEvents": "git@github.com:UseAllFive/marionette.googleAnalyticsEvents.git#~0.1.0"
   },
   "resolutions": {
     "jquery": "~2.1.1"
