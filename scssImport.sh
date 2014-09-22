@@ -1,9 +1,7 @@
 #!/bin/bash
 
-NEWLINE=$'\n'
-
 # Import vendor requirements
-VENDOR_FILES=$'@import \'_normalize\';\n@import \'_bourbon\';\n'
+VENDOR_FILES=$'@import \'_normalize\';\n@import \'_bourbon\';'
 
 # Import utility files before others
 #   First find only files under utilities
@@ -35,4 +33,4 @@ grep -v "\.css" | \
 sed "s/.scss//g" \
 )
 
-echo "$VENDOR_FILES""$UTILITY_FILES""$NEWLINE""$SCSS_FILES" > web/css/application.scss
+printf "$VENDOR_FILES\n$UTILITY_FILES\n$SCSS_FILES\n" > web/css/application.scss
