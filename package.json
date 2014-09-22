@@ -37,8 +37,7 @@
     "ua5-frontend-standards": "^0.0.4",
     "underscore": "^1.6.0",
     "grunt-contrib-imagemin": "~0.7.1",
-    "grunt-newer": "~0.7.0",
-    "grunt-buddyjs": "~0.1.0"
+    "grunt-newer": "~0.7.0"
   },
   "dependencies": {
     "grunt-contrib-symlink": "^0.3.0"
