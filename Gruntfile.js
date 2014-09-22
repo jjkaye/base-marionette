@@ -243,8 +243,7 @@ module.exports = function(grunt) {
             options: {
                 loadPath: config.files.scss.loadPaths,
                 quiet: true,
-                style: 'compact',
-                sourcemap: true
+                style: 'compact'
             },
             build: {
                 src: config.files.scss.app.src,
