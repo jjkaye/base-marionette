@@ -49,10 +49,6 @@ module.exports = function(grunt) {
         pkg: pkg,
         sanitizeVersion: sanitizeVersion,
         semver: require('semver'),
-        // Looks for magic numbers
-        buddyjs: {
-            src: config.files.js.app.src
-        },
         imagemin: {
             build: {
                 files: [{
@@ -243,8 +239,7 @@ module.exports = function(grunt) {
             options: {
                 loadPath: config.files.scss.loadPaths,
                 quiet: true,
-                style: 'compact',
-                sourcemap: true
+                style: 'compact'
             },
             build: {
                 src: config.files.scss.app.src,
@@ -401,6 +396,6 @@ module.exports = function(grunt) {
     );
 
     // Register task for validating code.
-    grunt.registerTask('validate-code', ['jshint:inline', 'jscs:inline', 'scsslint', 'buddyjs']);
+    grunt.registerTask('validate-code', ['jshint:inline', 'jscs:inline', 'scsslint']);
     grunt.registerTask('test', ['validate-code']);
 };
