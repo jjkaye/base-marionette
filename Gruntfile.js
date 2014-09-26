@@ -79,6 +79,9 @@ module.exports = function(grunt) {
             },
             'delete-python-vendor-directory': {
                 command: 'rm -rf vendor/'
+            },
+            'write-scss-import-file': {
+                command: './scssImport.sh'
             }
         },
         gae: {
@@ -308,6 +311,13 @@ module.exports = function(grunt) {
                 files: config.files.scss.watch,
                 tasks: 'sass'
             },
+            scssImport: {
+                options: {
+                    interrupt: true
+                },
+                files: config.files.scss.watch,
+                tasks: 'scssImport'
+            },
             svgstore: {
                 files: config.files.svgstore.src,
                 tasks: 'svgstore:build'
@@ -337,6 +347,7 @@ module.exports = function(grunt) {
     // see: https://github.com/GoogleCloudPlatform/appengine-python-flask-skeleton/issues/1
     devTasks = [
         'symlink:pre-commit-hook',
+        'scssImport',
         'sass',
         'svgstore',
         'newer:imagemin:build',
@@ -345,6 +356,10 @@ module.exports = function(grunt) {
     ];
     grunt.registerTask('default', devTasks);
     grunt.registerTask('dev', devTasks);
+
+    grunt.registerTask('scssImport', function() {
+        grunt.task.run('exec:write-scss-import-file');
+    });
 
     grunt.registerTask('dev-lint', devTasks.slice(0, -1).concat('jshint:startup', 'jscs:startup', 'watch'));
     grunt.registerTask('dev-require', devTasks.slice(0, -1).concat('requirejs:dev', 'watch'));
@@ -362,6 +377,7 @@ module.exports = function(grunt) {
         'exec:install-pip-requirements',
 
         //-- dist,
+        'scssImport',
         'sass',
         'requirejs:prod',
         'groc:normal',
