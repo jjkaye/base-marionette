@@ -4,20 +4,7 @@ define([
     'backbone',
     'underscore',
     'data/data',
-    'Handlebars',
-
-    // Require.js modules we need included, but don't directly access.
-    'app_extensions/facebook',
-    'app_extensions/handlebars_partials',
-    'marionette.babyBird',
-    'marionette.regionChildCloseEvent',
-    'marionette-transitions',
-    'backbone.grouped-collection',
-    'backbone.virtual-collection',
-    'backbone-super',
-    'polyfillLocationOrigin',
-    'marionette.enhancedController',
-    'marionette.googleAnalyticsEvents'
+    'Handlebars'
 ], function(Marionette, Backbone, _, data, Handlebars) {
     // Start up a new Marionette Application
     var App = new Marionette.Application();
@@ -30,22 +17,18 @@ define([
     // Fires after the Application has started and after the initializers
     // have been executed.
     App.on('start', function() {
-        // Start the history. All subapps must be loaded prior, or any routing
-        // inside of them will not work.
+        // Load all modules with routers
         require([
             // Example app
             'apps/example/example_app'
         ], function() {
+            // Start the history. All modules with routing must be loaded in the
+            // above require call.
             if (Backbone.history) {
                 Backbone.history.start({
                     pushState: true
                 });
             }
-
-            // Start all apps that were not automatically started. Do this
-            // here and not in a separate initializer because there's no
-            // reason to require the apps twice in this file.
-            App.module('ExampleApp').start();
         });
     });
 
@@ -67,19 +50,10 @@ define([
         });
     });
 
-    // Handlbar helpers
-    require(['Handlebars'], function(Handlebars) {
-        // Allow logging in handlebar templates
-        // ex: {{ log this }}
-        Handlebars.registerHelper('log', function(context) {
-            return window.console.log(context);
-        });
-
-        // URL encode strings in handlebar templates
-        // ex: {{ urlencode string }}
-        Handlebars.registerHelper('urlencode', function(context) {
-            return encodeURIComponent(context);
-        });
+    // Allow logging in handlebar templates
+    // ex: {{ log this }}
+    Handlebars.registerHelper('log', function(context) {
+        return window.console.log(context);
     });
 
     // Returning data/data.js when requested

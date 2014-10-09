@@ -5,9 +5,6 @@ define([
     App.module('ExampleApp', function(ExampleApp, App, Backbone, Marionette, $, _) {
         var API;
 
-        // Do not start automatically
-        this.startWithParent = false;
-
         ExampleApp.Router = Marionette.AppRouter.extend({
             appRoutes: {
                 '': 'show'
@@ -16,9 +13,7 @@ define([
 
         API = {
             show: function() {
-                new ExampleApp.Show.Controller({
-                    region: App.exampleRegion
-                });
+                new ExampleApp.Show.Controller();
 
                 // Notify application
                 App.trigger('example:show');
