@@ -13,11 +13,10 @@ module.exports = function(grunt) {
 
     var config;
     var deployTasks;
-    var devTasks;
     var isDevLintTask;
     var isDevTasks;
     var pkg;
-    var urls;
+    var tasks;
     var username = process.env.UA5_USER || process.env.USER || 'unknown_user';
     var watchJavascriptFiles = [];
     var watchRequireFiles = {
@@ -27,7 +26,6 @@ module.exports = function(grunt) {
 
     pkg = grunt.file.readJSON('package.json');
     config = grunt.file.readYAML('config/grunt.yml').config;
-    urls = grunt.file.readJSON('config/urls.json');
     isDevTasks = !(_.contains(grunt.cli.tasks, 'deploy') || _.contains(grunt.cli.tasks, 'prod'));
 
     // If this is the `dev-lint` task, then assign javascript files to be
@@ -93,32 +91,6 @@ module.exports = function(grunt) {
                 action: 'update'
             }
         },
-        groc: {
-            normal: {
-                src: config.files.js.app.src
-            },
-            options: {
-                index: 'index.html',
-                out: config.files.groc.dest,
-                strip: 'web/js'
-            }
-        },
-        htmlSnapshot: {
-            all: {
-                options: {
-                    snapshotPath: 'application/templates/snapshots/',
-                    sitePath: 'http://localhost:12080',
-                    haltOnError: false,
-                    //filename prefix for snapshot files
-                    fileNamePrefix: 'app',
-                    msWaitForPages: 4000,
-                    replaceStrings: [
-                        {'http://localhost:12080': 'http://app.appspot.com'}
-                    ],
-                    urls: urls
-                }
-            }
-        },
         jshint: {
             options: {
                 jshintrc: true
@@ -155,14 +127,6 @@ module.exports = function(grunt) {
         open: {
             deploy: {
                 path: 'http://<%= grunt.config("bump.increment") ? sanitizeVersion(pkg.version) : "' + username + '" %>.app.appspot.com'
-            }
-        },
-        'phantom-crawler': {
-            crawl: {
-                options: {
-                    baseUrl: 'http://localhost:12080',
-                    filePath: 'config/urls.json'
-                }
             }
         },
         prompt: {
@@ -257,18 +221,6 @@ module.exports = function(grunt) {
                 colorizeOutput: true
             }
         },
-        svgstore: {
-            options: {
-                prefix: 'shape-',
-                svg: {
-                    style: 'display: none;'
-                }
-            },
-            build: {
-                src: config.files.svgstore.src,
-                dest: config.files.svgstore.dest
-            }
-        },
         symlink: {
             options: {
                 overwrite: true
@@ -317,10 +269,6 @@ module.exports = function(grunt) {
                 },
                 files: config.files.scss.watch,
                 tasks: 'scssImport'
-            },
-            svgstore: {
-                files: config.files.svgstore.src,
-                tasks: 'svgstore:build'
             }
         }
     });
@@ -345,25 +293,19 @@ module.exports = function(grunt) {
     // pip is not idempotent when using the -t flag, which we want so the
     // vendor requirements are installed locally.
     // see: https://github.com/GoogleCloudPlatform/appengine-python-flask-skeleton/issues/1
-    devTasks = [
+    tasks = [
         'symlink:pre-commit-hook',
         'scssImport',
         'sass',
-        'svgstore',
         'newer:imagemin:build',
         'prepare_livereload',
         'watch'
     ];
-    grunt.registerTask('default', devTasks);
-    grunt.registerTask('dev', devTasks);
 
     grunt.registerTask('scssImport', function() {
         grunt.task.run('exec:write-scss-import-file');
     });
-
-    grunt.registerTask('dev-lint', devTasks.slice(0, -1).concat('jshint:startup', 'jscs:startup', 'watch'));
-    grunt.registerTask('dev-require', devTasks.slice(0, -1).concat('requirejs:dev', 'watch'));
-
+    grunt.registerTask('default', tasks);
     grunt.registerTask('python', ['exec:delete-python-vendor-directory', 'exec:install-pip-requirements']);
 
     // Register production build task
@@ -380,7 +322,6 @@ module.exports = function(grunt) {
         'scssImport',
         'sass',
         'requirejs:prod',
-        'groc:normal',
 
         //-- deploy
         'gae:deploy',
@@ -389,9 +330,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy', deployTasks);
 
-     /**
-     * Internal task to use the prompt settings to create a tag
-     */
+    // Internal task to use the prompt settings to create a tag
     grunt.registerTask('bump:prompt', function() {
         var increment = grunt.config('bump.increment');
         if (!increment) {
