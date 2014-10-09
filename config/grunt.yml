@@ -15,8 +15,6 @@ config:
                   - web/js/entities/**/*.js
                   - web/js/mixins/**/*.js
             livereload: web/js/livereload.js
-        groc:
-            dest: web/docs
         handlebars:
             src: web/js/**/*.hbs
         scss:
@@ -30,10 +28,6 @@ config:
                   - web/css/application.scss
                 dest: web/css/main.css
             watch: web/css/**/*.scss
-        svgstore:
-            src:
-                - web/svg/*.svg
-            dest: application/templates/svgs.html
     requirejs:
         appDir: ./web/js
         baseUrl: ./
