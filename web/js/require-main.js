@@ -19,6 +19,7 @@
             jquery: '../vendor/jquery/dist/jquery',
             marionette: '../vendor/backbone.marionette/lib/core/backbone.marionette',
             'marionette.googleAnalyticsEvents': '../vendor/marionette.googleAnalyticsEvents/lib/marionette.googleAnalyticsEvents',
+            'marionette.viewrouter': '../vendor/marionette.viewrouter/src/marionette.viewrouter',
             modernizr: '../vendor/modernizr/modernizr',
             text: '../vendor/requirejs-text/text',
             twitter: '../vendor/twitter/index',

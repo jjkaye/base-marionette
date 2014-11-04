@@ -12,7 +12,7 @@ define([
 
     // Add regions
     App.addRegions({
-        exampleRegion: '.example-region'
+        appRegion: '#app'
     });
 
     // Fires after the Application has started and after the initializers
@@ -21,12 +21,11 @@ define([
         // Load all modules with routers
         require([
             // Example app
-            'apps/contacts/controller'
-        ], function(Controller) {
-            var controller;
-
-            controller = new Controller();
-            App.exampleRegion.show(controller.getView());
+            'apps/contacts/router'
+        ], function(ContactsRouter) {
+            new ContactsRouter({
+                region: App.appRegion
+            });
 
             // Start the history. All modules with routing must be loaded in the
             // above require call.

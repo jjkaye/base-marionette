@@ -14,6 +14,7 @@
     "backbone-view-model": "git@github.com:UseAllFive/backbone-view-model.git#0.0.4",
     "twitter": "https://platform.twitter.com/widgets.js",
     "facebook": "https://connect.facebook.net/en_US/sdk.js",
-    "marionette.googleAnalyticsEvents": "git@github.com:UseAllFive/marionette.googleAnalyticsEvents.git#~0.1.0"
+    "marionette.googleAnalyticsEvents": "git@github.com:UseAllFive/marionette.googleAnalyticsEvents.git#~0.1.0",
+    "marionette.viewrouter": "~0.0.0"
   }
 }
