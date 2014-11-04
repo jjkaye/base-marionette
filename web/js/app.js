@@ -5,7 +5,8 @@ define([
     'underscore',
     'Handlebars',
     'extensions/facebook',
-    'marionette.googleAnalyticsEvents'
+    'marionette.googleAnalyticsEvents',
+    'modernizr'
 ], function(Marionette, Backbone, _, Handlebars) {
     // Start up a new Marionette Application
     var App = new Marionette.Application();
