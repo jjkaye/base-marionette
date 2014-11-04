@@ -3,7 +3,9 @@ define([
     'marionette',
     'backbone',
     'underscore',
-    'Handlebars'
+    'Handlebars',
+    'extensions/facebook',
+    'marionette.googleAnalyticsEvents'
 ], function(Marionette, Backbone, _, Handlebars) {
     // Start up a new Marionette Application
     var App = new Marionette.Application();
@@ -45,14 +47,6 @@ define([
     App.getCurrentRoute = function() {
         return Backbone.history.fragment;
     };
-
-    // Initializer callback. Fires when the application has started.
-    App.addInitializer(function(options) {
-        // Remove 300ms delay on mobile clicks.
-        require(['fastclick'], function(fastClick) {
-            fastClick.attach(document.body);
-        });
-    });
 
     // Allow logging in handlebar templates
     // ex: {{ log this }}
