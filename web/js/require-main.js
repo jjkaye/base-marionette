@@ -7,6 +7,7 @@
         paths: {
             backbone: '../vendor/backbone/backbone',
             'backbone.babysitter': '../vendor/backbone.babysitter/lib/backbone.babysitter',
+            'backbone-view-model': '../vendor/backbone-view-model/src/view-model',
             'backbone.wreqr': '../vendor/backbone.wreqr/lib/backbone.wreqr',
             fastclick: '../vendor/fastclick/lib/fastclick',
             Handlebars: '../vendor/handlebars/handlebars',

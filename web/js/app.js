@@ -3,9 +3,8 @@ define([
     'marionette',
     'backbone',
     'underscore',
-    'data/data',
     'Handlebars'
-], function(Marionette, Backbone, _, data, Handlebars) {
+], function(Marionette, Backbone, _, Handlebars) {
     // Start up a new Marionette Application
     var App = new Marionette.Application();
 
@@ -20,8 +19,13 @@ define([
         // Load all modules with routers
         require([
             // Example app
-            'apps/example/example_app'
-        ], function() {
+            'apps/contacts/controller'
+        ], function(Controller) {
+            var controller;
+
+            controller = new Controller();
+            App.exampleRegion.show(controller.getView());
+
             // Start the history. All modules with routing must be loaded in the
             // above require call.
             if (Backbone.history) {
@@ -54,11 +58,6 @@ define([
     // ex: {{ log this }}
     Handlebars.registerHelper('log', function(context) {
         return window.console.log(context);
-    });
-
-    // Returning data/data.js when requested
-    App.reqres.setHandler('data', function() {
-        return data;
     });
 
     // Return the application instance.

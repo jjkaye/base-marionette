@@ -11,6 +11,7 @@
     "modernizr": "~2.8.1",
     "requirejs": "~2.1.11",
     "requirejs-handlebars": "jfparadis/requirejs-handlebars",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "backbone-view-model": "git@github.com:UseAllFive/backbone-view-model.git#0.0.4"
   }
 }
