@@ -5,7 +5,11 @@
 @import '_defaults';
 @import '_fonts';
 @import '_site';
-@import 'atoms/_atom';
+@import 'atoms/_badge';
+@import 'atoms/_headings';
+@import 'atoms/_links';
+@import 'atoms/_lists';
 @import 'molecules/_molecule';
-@import 'organisms/_organism';
-@import 'templates/_template';
+@import 'organisms/_contacts_header';
+@import 'organisms/_contacts_list_item';
+@import 'templates/_contacts_list';
