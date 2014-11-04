@@ -236,4 +236,8 @@ module.exports = function(grunt) {
     // Register task for validating code.
     // `grunt validate-code`
     grunt.registerTask('validate-code', ['jshint:inline', 'jscs:inline', 'scsslint']);
+
+    // Register task for testing
+    // `grunt test`
+    grunt.registerTask('test', ['validate-code']);
 };

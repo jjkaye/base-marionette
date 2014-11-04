@@ -28,6 +28,6 @@
     "grunt-contrib-symlink": "^0.3.0"
   },
   "scripts": {
-    "test": "grunt validate-code"
+    "test": "grunt test"
   }
 }
