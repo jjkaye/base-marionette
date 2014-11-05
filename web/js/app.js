@@ -3,15 +3,17 @@ define([
     'marionette',
     'backbone',
     'underscore',
-    'data/data',
-    'Handlebars'
-], function(Marionette, Backbone, _, data, Handlebars) {
+    'Handlebars',
+    'extensions/facebook',
+    'marionette.googleAnalyticsEvents',
+    'modernizr'
+], function(Marionette, Backbone, _, Handlebars) {
     // Start up a new Marionette Application
     var App = new Marionette.Application();
 
     // Add regions
     App.addRegions({
-        exampleRegion: '.example-region'
+        appRegion: '#app'
     });
 
     // Fires after the Application has started and after the initializers
@@ -20,8 +22,12 @@ define([
         // Load all modules with routers
         require([
             // Example app
-            'apps/example/example_app'
-        ], function() {
+            'apps/contacts/router'
+        ], function(ContactsRouter) {
+            new ContactsRouter({
+                region: App.appRegion
+            });
+
             // Start the history. All modules with routing must be loaded in the
             // above require call.
             if (Backbone.history) {
@@ -42,23 +48,10 @@ define([
         return Backbone.history.fragment;
     };
 
-    // Initializer callback. Fires when the application has started.
-    App.addInitializer(function(options) {
-        // Remove 300ms delay on mobile clicks.
-        require(['fastclick'], function(fastClick) {
-            fastClick.attach(document.body);
-        });
-    });
-
     // Allow logging in handlebar templates
     // ex: {{ log this }}
     Handlebars.registerHelper('log', function(context) {
         return window.console.log(context);
-    });
-
-    // Returning data/data.js when requested
-    App.reqres.setHandler('data', function() {
-        return data;
     });
 
     // Return the application instance.

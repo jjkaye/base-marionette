@@ -6,11 +6,15 @@
     "backbone.marionette": "~2.2.1",
     "bootstrap-sass-official": "~3.1",
     "bourbon": "~4.0.1",
-    "fastclick": "~1.0.2",
     "handlebars": "~2.0.0",
     "modernizr": "~2.8.1",
     "requirejs": "~2.1.11",
     "requirejs-handlebars": "jfparadis/requirejs-handlebars",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "backbone-view-model": "git@github.com:UseAllFive/backbone-view-model.git#0.0.4",
+    "twitter": "https://platform.twitter.com/widgets.js",
+    "facebook": "https://connect.facebook.net/en_US/sdk.js",
+    "marionette.googleAnalyticsEvents": "git@github.com:UseAllFive/marionette.googleAnalyticsEvents.git#~0.1.0",
+    "marionette.viewrouter": "~0.0.0"
   }
 }

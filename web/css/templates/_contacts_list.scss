@@ -1,0 +1,5 @@
+.contacts-list {
+    li:nth-child(even) {
+        background-color: $gray;
+    }
+}
