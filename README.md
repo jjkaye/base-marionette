@@ -10,11 +10,6 @@ grunt python
 grunt
 ```
 
-### Annotated Source
-We use [groc](http://nevir.github.io/groc) to generate annotated source code for
-all our files. It is generated automatically when `grunt` is running and can be found at
-`<webroot>/docs/app.html`.
-
 # Deploy Process for Production
 
 ## Setup

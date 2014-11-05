@@ -237,7 +237,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: watchJavascriptFiles,
-                tasks: ['jshint:inline', 'jscs:inline', 'groc']
+                tasks: ['jshint:inline', 'jscs:inline']
             },
             livereload: {
                 options: {
