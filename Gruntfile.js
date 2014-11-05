@@ -1,3 +1,5 @@
+/* global process */
+
 var _;
 var matchdep;
 var chalk;
@@ -10,10 +12,12 @@ chalk = require('chalk');
 module.exports = function(grunt) {
 
     var config;
+    var deployTasks;
     var isDevLintTask;
     var isDevTasks;
     var pkg;
     var tasks;
+    var username = process.env.UA5_USER || process.env.USER || 'unknown_user';
     var watchJavascriptFiles = [];
     var watchRequireFiles = {
         src: [],
@@ -34,8 +38,15 @@ module.exports = function(grunt) {
         watchRequireFiles.src = config.files.js.app.src;
     }
 
+    //-- version must match '^(?:^(?!-)[a-z\d\-]{0,62}[a-z\d]$)$'
+    function sanitizeVersion(dirtyVersion) {
+        return (dirtyVersion || '').replace(/(.)/, 'v$1').replace(/[^a-z0-9]/g, '-');
+    }
+
     grunt.initConfig({
         pkg: pkg,
+        sanitizeVersion: sanitizeVersion,
+        semver: require('semver'),
         imagemin: {
             build: {
                 files: [{
@@ -46,9 +57,38 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        bump: {
+            options: {
+                commitFiles: [ //-- Files to add to release commit
+                    'package.json',
+                    'bower.json'
+                ],
+                files: [ //-- Files to bump
+                    'package.json',
+                    'bower.json'
+                ],
+                pushTo: 'origin',
+                updateConfigs: ['pkg']
+            }
+        },
         exec: {
+            'install-pip-requirements': {
+                command: 'pip install -r requirements.txt -t vendor/'
+            },
+            'delete-python-vendor-directory': {
+                command: 'rm -rf vendor/'
+            },
             'write-scss-import-file': {
                 command: './scssImport.sh'
+            }
+        },
+        gae: {
+            options: { //-- See: https://github.com/maciejzasada/grunt-gae
+                auth: '.gae.auth',
+                version: '<%= grunt.config("bump.increment") ? sanitizeVersion(pkg.version) : "' + username + '" %>'
+            },
+            deploy: {
+                action: 'update'
             }
         },
         jshint: {
@@ -81,6 +121,44 @@ module.exports = function(grunt) {
                 },
                 files: {
                     src: config.files.js.app.src
+                }
+            }
+        },
+        open: {
+            deploy: {
+                path: 'http://<%= grunt.config("bump.increment") ? sanitizeVersion(pkg.version) : "' + username + '" %>.app.appspot.com'
+            }
+        },
+        prompt: {
+            bump: {
+                options: {
+                    questions: [
+                        {
+                            config: 'bump.increment',
+                            type: 'list',
+                            message: 'Bump version from ' + pkg.version.cyan + ' to:',
+                            choices: [
+                                {
+                                    value: 'patch',
+                                    name: 'Patch:  '.yellow +
+                                        '<%= semver.inc(pkg.version, "patch") %>'.yellow +
+                                        '   Backwards-compatible bug fixes.'
+                                },
+                                {
+                                    value: 'minor',
+                                    name: 'Minor:  '.yellow +
+                                        '<%= semver.inc(pkg.version, "minor") %>'.yellow +
+                                        '   Add functionality in a backwards-compatible manner.'
+                                },
+                                {
+                                    value: 'major',
+                                    name: 'Major:  '.yellow +
+                                        '<%= semver.inc(pkg.version, "major") %>'.yellow +
+                                        '   Incompatible API changes.'
+                                }
+                            ]
+                        }
+                    ]
                 }
             }
         },
@@ -217,27 +295,62 @@ module.exports = function(grunt) {
     // see: https://github.com/GoogleCloudPlatform/appengine-python-flask-skeleton/issues/1
     tasks = [
         'symlink:pre-commit-hook',
-        'exec:write-scss-import-file',
+        'scssImport',
         'sass',
         'newer:imagemin:build',
         'prepare_livereload',
         'watch'
     ];
 
-    // Default grunt task: `grunt`
+    grunt.registerTask('scssImport', function() {
+        grunt.task.run('exec:write-scss-import-file');
+    });
     grunt.registerTask('default', tasks);
+    grunt.registerTask('python', ['exec:delete-python-vendor-directory', 'exec:install-pip-requirements']);
 
     // Register production build task
-    // TODO: Add another task to switch out
+    // TODO: Add another task (or via python) to switch out
     // the main script source with the build version upon deploy
-    // `grunt prod`
     grunt.registerTask('prod', ['requirejs:prod']);
 
-    // Register task for validating code.
-    // `grunt validate-code`
-    grunt.registerTask('validate-code', ['jshint:inline', 'jscs:inline', 'scsslint']);
+    deployTasks = [
+        //-- prep
+        'exec:delete-python-vendor-directory',
+        'exec:install-pip-requirements',
 
-    // Register task for testing
-    // `grunt test`
+        //-- dist,
+        'scssImport',
+        'sass',
+        'requirejs:prod',
+
+        //-- deploy
+        'gae:deploy',
+        'open:deploy'
+    ];
+
+    grunt.registerTask('deploy', deployTasks);
+
+    // Internal task to use the prompt settings to create a tag
+    grunt.registerTask('bump:prompt', function() {
+        var increment = grunt.config('bump.increment');
+        if (!increment) {
+            grunt.fatal('bump.increment config not set!');
+        }
+
+        grunt.task.run('bump:' + increment);
+    });
+
+    grunt.registerTask(
+        'deploy:prod',
+        [
+            'prompt:bump',
+            'bump:prompt'
+        ].concat(
+            deployTasks
+        )
+    );
+
+    // Register task for validating code.
+    grunt.registerTask('validate-code', ['jshint:inline', 'jscs:inline', 'scsslint']);
     grunt.registerTask('test', ['validate-code']);
 };
