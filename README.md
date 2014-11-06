@@ -11,9 +11,9 @@ grunt
 
 ## Testing
 ### Set up BrowserStack
-- Export BrowserStack creds as env variables ... for example in my bashrc I have:
-    * ```export BROWSERSTACK_USER=travisglines1```
-    * ```export BROWSERSTACK_KEY=ry7rcSN4xspxxpqDh9zK```
+- Export BrowserStack creds as env variables... :
+    * ```export BROWSERSTACK_USER=your_username```
+    * ```export BROWSERSTACK_KEY=your_key```
     * ```export BROWSERSTACK_PORT=12080```
 - Install mocha globally - this will give you the mocha command
     * ```npm install -g mocha```
