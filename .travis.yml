@@ -9,6 +9,7 @@ node_js:
 
 install:
  - npm install
+ - bundle install
 
 script:
   - npm test
