@@ -1,6 +1,6 @@
 base-marionette
 ===============
-[![Build Status](https://travis-ci.org/UseAllFive/base-marionette.svg&branch=python)](https://travis-ci.org/UseAllFive/base-marionette)
+[![Build Status](https://travis-ci.org/UseAllFive/base-marionette.svg)](https://travis-ci.org/UseAllFive/base-marionette)
 
 ## Getting started
 ```BASH
