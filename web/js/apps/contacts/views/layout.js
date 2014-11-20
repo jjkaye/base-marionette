@@ -1,7 +1,7 @@
 define([
     'app',
     'marionette',
-    'hbars!./view'
+    'hbars!../templates/layout'
 ], function(App, Marionette, template) {
     return Marionette.LayoutView.extend({
         template: template,

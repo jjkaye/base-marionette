@@ -4,7 +4,9 @@ define([
     '../../entities/store',
     './views/collection',
     './entities/collection'
-], function(app, Marionette, Store, View, ViewCollection) {
+], function(app, Marionette, Store, CollectionView, ViewCollection) {
+    var collectionView;
+
     return Marionette.Controller.extend({
         initialize: function() {
             var collection;
@@ -17,16 +19,16 @@ define([
                 source_collection: collection // jshint ignore:line
             });
 
-            this._view = new View({
+            collectionView = new CollectionView({
                 collection: viewCollection
             });
 
-            this._view.on('childview:delete', function(view) {
+            collectionView.on('childview:delete', function(view) {
                 view.model.get('source_model').destroy();
             }, this);
         },
         getView: function() {
-            return this._view;
+            return collectionView;
         }
     });
 });

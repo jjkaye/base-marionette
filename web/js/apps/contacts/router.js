@@ -1,15 +1,19 @@
 define([
     './controller',
     'marionette.viewrouter'
-], function(ContactsController, ViewRouter) {
+], function(Controller, ViewRouter) {
+    var controller;
+
     return ViewRouter.extend({
         routes: {
             '': 'contacts'
         },
         contacts: function() {
-            var controller;
+            if (controller) {
+                controller.destroy();
+            }
 
-            controller = new ContactsController();
+            controller = new Controller();
             return controller.getView();
         }
     });
