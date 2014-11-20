@@ -1,15 +1,28 @@
-language:
-    - node_js
+language: php
+
+php:
+  - 5.5
 
 before_script:
-    - npm install -g grunt-cli
+  - composer install --prefer-dist --dev
+  - pear install pear/PHP_CodeSniffer
+  - phpenv rehash
+  - cp app/config/env.yml-travis-ci app/config/env.yml
+  - mysql -e 'create database `base_marionette`;'
+  - ./bin/doctrine orm:schema-tool:drop --force
+  - ./bin/doctrine orm:schema-tool:create
+  - npm install -g grunt-cli
+
+ruby:
+  - 1.9.3
 
 node_js:
-    - 0.10
+  - 0.10
 
 install:
-    - npm install
-    - bundle install
+  - npm install
+  - bundle install
 
 script:
-    - npm test
+  - "phpcs --standard=PSR2  --ignore=app/cache/ app/ src/"
+  - npm test

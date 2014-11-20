@@ -1,7 +1,5 @@
 *.map
 *.min.js
-*.pyc
-*.pyo
 .editorconfig
 .gae.auth
 .jscsrc
@@ -10,7 +8,7 @@
 .npmignore
 .sass-cache
 .scss-lint.yml
-/application/templates/svgs.html
+/app/config/env.yml
 /node_modules
 /tmp
 /vendor

@@ -1,0 +1,27 @@
+{
+    "autoload": {
+        "files": [
+            "app/AppKernel.php"
+        ],
+        "psr-4": {
+            "BaseMarionette\\": "src/BaseMarionette"
+        }
+    },
+    "name": "useallfive/base-marionette",
+    "description": "Base Marionette Silex Edition",
+    "authors": [
+        {
+            "name": "Zach Brown",
+            "email": "zeebz91@gmail.com"
+        }
+    ],
+    "require": {
+        "silex/silex": "~1.2",
+        "twig/twig": "~1.16",
+        "symfony/yaml": "~2.5",
+        "igorw/config-service-provider": "~1.2",
+        "dflydev/doctrine-orm-service-provider": "~1.0",
+        "useallfive/doctrine-data-fixtures-command": "dev-master",
+        "jms/serializer": "~0.16"
+    }
+}

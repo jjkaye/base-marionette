@@ -1,3 +1,5 @@
+/* globals process */
+
 var _;
 var matchdep;
 var chalk;
@@ -14,6 +16,7 @@ module.exports = function(grunt) {
     var isDevTasks;
     var pkg;
     var tasks;
+    var username = process.env.UA5_USER || process.env.USER || 'unknown_user';
     var watchJavascriptFiles = [];
     var watchRequireFiles = {
         src: [],
@@ -46,7 +49,23 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        copy: {
+            'silex-env-prod': {
+                src: 'app/config/env.yml-prod',
+                dest: 'app/config/env.yml'
+            },
+            'silex-env': {
+                src: 'app/config/env.yml-' + username,
+                dest: 'app/config/env.yml'
+            }
+        },
         exec: {
+            'doctrine-dev-db': {
+                command: (
+                    './bin/doctrine orm:schema-tool:drop --force &&' +
+                    './bin/doctrine orm:schema-tool:create'
+                )
+            },
             'write-scss-import-file': {
                 command: './scssImport.sh'
             }
@@ -226,6 +245,15 @@ module.exports = function(grunt) {
 
     // Default grunt task: `grunt`
     grunt.registerTask('default', tasks);
+
+    grunt.registerTask(
+        'dev-db',
+        'Recreate Doctrine schema and reload fixtures.',
+        [
+            'copy:silex-env',
+            'exec:doctrine-dev-db'
+        ]
+    );
 
     // Register production build task
     // TODO: Add another task to switch out
