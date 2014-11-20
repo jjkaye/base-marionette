@@ -1,6 +1,5 @@
 define([
     'backbone',
-
     // Side effect dependencies
     'backbone-view-model'
 ], function(Backbone) {

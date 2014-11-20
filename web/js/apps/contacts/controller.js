@@ -2,34 +2,42 @@ define([
     // Basic dependencies
     'app',
     'marionette',
-    './view',
+    './views/layout',
     // Components
     './components/list/controller',
     './components/header/controller'
-], function(app, Marionette, View,
+], function(app, Marionette, LayoutView,
     ContactsController, HeaderController) {
+    var contactListController;
+    var headerController;
+    var layoutView;
+
     return Marionette.Controller.extend({
         initialize: function() {
-            this._view = new View();
-            this._view.on('show', function() {
+            layoutView = new LayoutView();
+            layoutView.on('show', function() {
                 this._showContactListComponent();
                 this._showHeaderComponent();
             }, this);
         },
         _showContactListComponent: function() {
-            var controller;
+            if (contactListController) {
+                contactListController.destroy();
+            }
 
-            controller = new ContactsController();
-            this._view.listRegion.show(controller.getView());
+            contactListController = new ContactsController();
+            layoutView.listRegion.show(contactListController.getView());
         },
         _showHeaderComponent: function() {
-            var controller;
+            if (headerController) {
+                headerController.destroy();
+            }
 
-            controller = new HeaderController();
-            this._view.headerRegion.show(controller.getView());
+            headerController = new HeaderController();
+            layoutView.headerRegion.show(headerController.getView());
         },
         getView: function() {
-            return this._view;
+            return layoutView;
         }
     });
 });

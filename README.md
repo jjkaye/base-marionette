@@ -1,6 +1,6 @@
 base-marionette
 ===============
-[![Build Status](https://magnum.travis-ci.com/UseAllFive/base-marionette.svg?token=dfaxEQcQwzEeozJHADsN&branch=master)](https://magnum.travis-ci.com/UseAllFive/base-marionette)
+[![Build Status](https://travis-ci.org/UseAllFive/base-marionette.svg)](https://travis-ci.org/UseAllFive/base-marionette)
 
 ## Getting started
 ```BASH
