@@ -7,37 +7,34 @@ define([
     './components/list/controller',
     './components/header/controller'
 ], function(app, Marionette, LayoutView,
-    ContactsController, HeaderController) {
-    var contactListController;
-    var headerController;
-    var layoutView;
+    ContactsListController, HeaderController) {
 
     return Marionette.Controller.extend({
         initialize: function() {
-            layoutView = new LayoutView();
-            layoutView.on('show', function() {
+            this.layoutView = new LayoutView();
+            this.layoutView.on('show', function() {
                 this._showContactListComponent();
                 this._showHeaderComponent();
             }, this);
         },
         _showContactListComponent: function() {
-            if (contactListController) {
-                contactListController.destroy();
+            if (this.contactListController) {
+                this.contactListController.destroy();
             }
 
-            contactListController = new ContactsController();
-            layoutView.listRegion.show(contactListController.getView());
+            this.contactListController = new ContactsListController();
+            this.layoutView.listRegion.show(this.contactListController.getView());
         },
         _showHeaderComponent: function() {
-            if (headerController) {
-                headerController.destroy();
+            if (this.headerController) {
+                this.headerController.destroy();
             }
 
-            headerController = new HeaderController();
-            layoutView.headerRegion.show(headerController.getView());
+            this.headerController = new HeaderController();
+            this.layoutView.headerRegion.show(this.headerController.getView());
         },
         getView: function() {
-            return layoutView;
+            return this.layoutView;
         }
     });
 });
