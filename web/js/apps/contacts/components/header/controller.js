@@ -5,7 +5,6 @@ define([
     './views/item',
     './entities/model'
 ], function(app, Marionette, Store, ItemView, ViewModel) {
-    var itemView;
 
     return Marionette.Controller.extend({
         initialize: function() {
@@ -18,16 +17,16 @@ define([
                 length: collection.length
             });
 
-            itemView = new ItemView({
+            this.itemView = new ItemView({
                 model: viewModel
             });
 
-            itemView.listenTo(collection, 'all', function() {
+            this.itemView.listenTo(collection, 'all', function() {
                 viewModel.set('length', collection.length);
             });
         },
         getView: function() {
-            return itemView;
+            return this.itemView;
         }
     });
 });
