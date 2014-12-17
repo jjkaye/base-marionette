@@ -27,7 +27,11 @@ config:
                 src:
                   - web/css/application.scss
                 dest: web/css/main.css
-            watch: web/css/**/*.scss
+        scssImport:
+            watch:
+                - web/css/**/*.scss
+                - '!web/css/*.css'
+                - '!web/css/application.scss'
     requirejs:
         appDir: ./web/js
         baseUrl: ./
