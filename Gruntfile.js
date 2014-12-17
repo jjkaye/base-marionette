@@ -136,7 +136,7 @@ module.exports = function(grunt) {
             }
         },
         scsslint: {
-            allFiles: config.files.scss.watch,
+            allFiles: config.files.scssImport.watch,
             options: {
                 bundleExec: false,
                 config: '.scss-lint.yml',
@@ -178,19 +178,12 @@ module.exports = function(grunt) {
                 files: watchRequireFiles.src,
                 tasks: ['requirejs:dev']
             },
-            scss: {
-                options: {
-                    interrupt: true
-                },
-                files: config.files.scss.watch,
-                tasks: 'sass'
-            },
             scssImport: {
                 options: {
                     interrupt: true
                 },
-                files: config.files.scss.watch,
-                tasks: 'scssImport'
+                files: config.files.scssImport.watch,
+                tasks: ['exec:write-scss-import-file', 'sass']
             }
         }
     });
