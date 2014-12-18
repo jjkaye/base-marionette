@@ -13,7 +13,7 @@ config:
                   - web/js/components/**/*.js
                   - web/js/data/**/*.js
                   - web/js/entities/**/*.js
-                  - web/js/mixins/**/*.js
+                  - web/js/extensions/**/*.js
             livereload: web/js/livereload.js
         handlebars:
             src: web/js/**/*.hbs

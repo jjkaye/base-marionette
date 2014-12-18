@@ -4,6 +4,8 @@ define([
     'backbone',
     'underscore',
     'Handlebars',
+    // Side effects
+    'extensions/marionette_memory_safe_controller',
     'extensions/facebook',
     'marionette.googleAnalyticsEvents',
     'modernizr'
