@@ -4,19 +4,23 @@ config:
         img:
             src: web/img/**/*.{png,jpg,gif}
         js:
+            vendor:
+                src:
+                  - web/vendor/angular-resource/angular-resource.js
+                  - web/vendor/angular-route/angular-route.js
+                  - web/vendor/angular-touch/angular-touch.js
+                  - web/vendor/modernizr/modernizr.js
+                  - web/vendor/twitter/index.js
+                  - web/vendor/facebook/index.js
+                dest: web/build/vendor.js
+                destMin: web/build/vendor.min.js
             app:
                 src:
-                  - Gruntfile.js
-                  - web/js/require-main.js
-                  - web/js/app.js
-                  - web/js/apps/**/*.js
-                  - web/js/components/**/*.js
-                  - web/js/data/**/*.js
-                  - web/js/entities/**/*.js
-                  - web/js/extensions/**/*.js
+                  - web/js/apps/*/app/app.js
+                  - web/js/apps/*/app/**/*.js
+                dest: web/build/app.js
+                destMin: web/build/app.min.js
             livereload: web/js/livereload.js
-        handlebars:
-            src: web/js/**/*.hbs
         scss:
             loadPaths:
               - web/css
@@ -32,10 +36,3 @@ config:
                 - web/css/**/*.scss
                 - '!web/css/*.css'
                 - '!web/css/application.scss'
-    requirejs:
-        appDir: ./web/js
-        baseUrl: ./
-        dir: ./web/build
-        mainConfigFile: ./web/js/require-main.js
-        modules:
-            - name: require-main

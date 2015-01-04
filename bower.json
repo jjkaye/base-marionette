@@ -3,18 +3,18 @@
   "version": "0.0.1",
   "main": "bower.json",
   "dependencies": {
-    "backbone.marionette": "~2.2.1",
     "bootstrap-sass-official": "~3.1",
     "bourbon": "~4.0.1",
-    "handlebars": "~2.0.0",
     "modernizr": "~2.8.1",
     "requirejs": "~2.1.11",
-    "requirejs-handlebars": "jfparadis/requirejs-handlebars",
-    "requirejs-text": "~2.0.12",
-    "backbone-view-model": "git@github.com:UseAllFive/backbone-view-model.git#0.0.4",
     "twitter": "https://platform.twitter.com/widgets.js",
     "facebook": "https://connect.facebook.net/en_US/sdk.js",
-    "marionette.googleAnalyticsEvents": "git@github.com:UseAllFive/marionette.googleAnalyticsEvents.git#~0.1.0",
-    "marionette.viewrouter": "~0.0.0"
+    "angular": "~1.3.8",
+    "angular-mocks": "~1.3.8",
+    "angular-touch": "~1.3.8",
+    "angular-route": "~1.3.8",
+    "angular-animate": "~1.3.8",
+    "jquery": "~2.1.3",
+    "angular-resource": "~1.3.8"
   }
 }

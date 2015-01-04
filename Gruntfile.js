@@ -10,29 +10,13 @@ chalk = require('chalk');
 module.exports = function(grunt) {
 
     var config;
-    var isDevLintTask;
     var isDevTasks;
     var pkg;
     var tasks;
-    var watchJavascriptFiles = [];
-    var watchRequireFiles = {
-        src: [],
-        dest: []
-    };
 
     pkg = grunt.file.readJSON('package.json');
     config = grunt.file.readYAML('config/grunt.yml').config;
     isDevTasks = !(_.contains(grunt.cli.tasks, 'deploy') || _.contains(grunt.cli.tasks, 'prod'));
-
-    // If this is the `dev-lint` task, then assign javascript files to be
-    // watched.
-    isDevLintTask = isDevTasks && _.contains(grunt.cli.tasks, 'dev-lint');
-    if (isDevLintTask) {
-        watchJavascriptFiles = config.files.js.app.src;
-    } else if (isDevTasks && _.contains(grunt.cli.tasks, 'dev-require')) {
-        watchRequireFiles.dest.push('web/build/require-main.js');
-        watchRequireFiles.src = config.files.js.app.src;
-    }
 
     grunt.initConfig({
         pkg: pkg,
@@ -49,6 +33,39 @@ module.exports = function(grunt) {
         exec: {
             'write-scss-import-file': {
                 command: './scssImport.sh'
+            }
+        },
+        concat: {
+            options: {
+                sourceMap: true
+            },
+            'js-app': {
+                src: config.files.js.app.src,
+                dest: config.files.js.app.dest
+            },
+            'js-vendor': {
+                src: config.files.js.vendor.src,
+                dest: config.files.js.vendor.dest
+            }
+        },
+        uglify: {
+            options: {
+                sourceMap: true,
+                sourceMapIncludeSources: true
+            },
+            'js-app': {
+                options: {
+                    sourceMapIn: config.files.js.app.dest + '.map'
+                },
+                src: config.files.js.app.dest,
+                dest: config.files.js.app.destMin
+            },
+            'js-vendor': {
+                options: {
+                    sourceMapIn: config.files.js.vendor.dest + '.map'
+                },
+                src: config.files.js.vendor.dest,
+                dest: config.files.js.vendor.destMin
             }
         },
         jshint: {
@@ -84,46 +101,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        requirejs: {
-            options: {
-                findNestedDependencies: true,
-                generateSourceMaps: true,
-                optimize: 'uglify2',
-                preserveLicenseComments: false,
-                uglify2: {
-                    //Example of a specialized config. If you are fine
-                    //with the default options, no need to specify
-                    //any of these properties.
-                    output: {
-                        beautify: false
-                    },
-                    compress: {
-                        sequences: false
-                    },
-                    warnings: false,
-                    mangle: false
-                }
-            },
-            prod: {
-                options: {
-                    appDir: config.requirejs.appDir,
-                    baseUrl: config.requirejs.baseUrl,
-                    dir: config.requirejs.dir,
-                    mainConfigFile: config.requirejs.mainConfigFile,
-                    modules: config.requirejs.modules
-                }
-            },
-            dev: {
-                options: {
-                    appDir: config.requirejs.appDir,
-                    baseUrl: config.requirejs.baseUrl,
-                    dir: config.requirejs.dir,
-                    mainConfigFile: config.requirejs.mainConfigFile,
-                    modules: config.requirejs.modules,
-                    optimize: 'none'
-                }
-            }
-        },
         sass: {
             options: {
                 loadPath: config.files.scss.loadPaths,
@@ -153,13 +130,21 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            concat: {
+                files: config.files.js.app.src,
+                tasks: 'concat:js-app'
+            },
+            uglify: {
+                files: config.files.js.app.dest,
+                tasks: 'uglify:js-app'
+            },
             imagemin: {
                 files: config.files.img.src,
                 tasks: 'newer:imagemin:build'
             },
-            js: {
-                files: watchJavascriptFiles,
-                tasks: ['jshint:inline', 'jscs:inline', 'groc']
+            'js-lint': {
+                files: config.files.js.app.src,
+                tasks: ['jshint:inline', 'jscs:inline']
             },
             livereload: {
                 options: {
@@ -167,16 +152,8 @@ module.exports = function(grunt) {
                 },
                 files: [].concat(
                     'web/css/main.css',
-                    config.files.js.app.src,
-                    config.files.handlebars.src
+                    config.files.js.app.src
                 )
-            },
-            require: {
-                options: {
-                    interrupt: true
-                },
-                files: watchRequireFiles.src,
-                tasks: ['requirejs:dev']
             },
             scssImport: {
                 options: {
@@ -212,6 +189,8 @@ module.exports = function(grunt) {
         'symlink:pre-commit-hook',
         'exec:write-scss-import-file',
         'sass',
+        'concat',
+        'uglify',
         'newer:imagemin:build',
         'prepare_livereload',
         'watch'
@@ -219,12 +198,6 @@ module.exports = function(grunt) {
 
     // Default grunt task: `grunt`
     grunt.registerTask('default', tasks);
-
-    // Register production build task
-    // TODO: Add another task to switch out
-    // the main script source with the build version upon deploy
-    // `grunt prod`
-    grunt.registerTask('prod', ['requirejs:prod']);
 
     // Register task for validating code.
     // `grunt validate-code`
