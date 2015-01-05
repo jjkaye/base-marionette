@@ -1,6 +1,6 @@
 /*global angular */
 angular.module('contactsApp')
-    .factory('ContactsStore', ['$http', function($http) {
+    .factory('ContactsService', ['$http', function($http) {
         var contacts = [];
         var contactsPromise;
         return {

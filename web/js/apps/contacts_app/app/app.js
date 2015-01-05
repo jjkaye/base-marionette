@@ -3,11 +3,11 @@ angular.module('contactsApp', ['ngRoute'])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'js/apps/contacts/app/contacts_list/contacts_list.html',
+                templateUrl: 'js/apps/contacts_app/app/contacts/contacts_list/contacts_list.html',
                 controller: 'ContactsListController as ctrl'
             })
             .when('/contacts/:id', {
-                templateUrl: 'js/apps/contacts/app/contacts_single/contacts_single.html',
+                templateUrl: 'js/apps/contacts_app/app/contacts/contacts_single/contacts_single.html',
                 controller: 'ContactsSingleController as ctrl'
             })
             .otherwise({

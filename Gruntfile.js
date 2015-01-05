@@ -37,7 +37,10 @@ module.exports = function(grunt) {
         },
         karma: {
             options: {
-                files: ['web/vendor/angular/angular.js', 'web/vendor/angular-mocks/angular-mocks.js', 'web/vendor/angular-route/angular-route.js', config.files.js.app.src, config.files.js.tests.unit]
+                // karma server requires angular / angular module JavaScript
+                // as well as the rest of the app's JavaScript files to run
+                // correctly
+                files: [config.files.js.tests.unit.src, config.files.js.app.src]
             },
             unit: {
                 configFile: 'karma.conf.js',
@@ -140,7 +143,7 @@ module.exports = function(grunt) {
         },
         watch: {
             karma: {
-                files: [config.files.js.app.src, config.files.js.tests.unit],
+                files: [config.files.js.app.src, config.files.js.tests.unit.src],
                 tasks: ['karma:unit:run']
             },
             concat: {

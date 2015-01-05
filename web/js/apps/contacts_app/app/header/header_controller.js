@@ -1,10 +1,10 @@
 /*global angular */
 angular.module('contactsApp')
-    .controller('HeaderController', ['ContactsStore', '$log', function(ContactsStore, $log) {
+    .controller('HeaderController', ['ContactsService', '$log', function(ContactsService, $log) {
         var self;
         self = this;
         self.contacts = [];
-        ContactsStore.query().then(function(contacts) {
+        ContactsService.query().then(function(contacts) {
             self.contacts = contacts;
         }, function(error) {
             $log.log(error);

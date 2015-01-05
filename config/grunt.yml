@@ -6,9 +6,6 @@ config:
         js:
             vendor:
                 src:
-                    - web/vendor/angular-resource/angular-resource.js
-                    - web/vendor/angular-route/angular-route.js
-                    - web/vendor/angular-touch/angular-touch.js
                     - web/vendor/modernizr/modernizr.js
                     - web/vendor/twitter/index.js
                     - web/vendor/facebook/index.js
@@ -22,7 +19,13 @@ config:
                 dest: web/build/app.js
                 destMin: web/build/app.min.js
             tests:
-                unit: web/js/apps/*/app/**/*.test.js
+                unit:
+                    src:
+                        - web/vendor/angular/angular.js
+                        - web/vendor/angular-mocks/angular-mocks.js
+                        - web/vendor/angular-route/angular-route.js
+                        - web/vendor/angular-animate/angular-animate.js
+                        - web/js/apps/*/app/**/*.test.js
             livereload: web/js/livereload.js
         scss:
             loadPaths:

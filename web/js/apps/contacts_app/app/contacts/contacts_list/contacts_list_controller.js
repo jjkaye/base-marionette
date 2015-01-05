@@ -1,13 +1,11 @@
 /*global angular */
 angular.module('contactsApp')
-    .controller('ContactsListController', ['ContactsStore', '$log', '$filter', '$window', function(ContactsStore, $log, $filter, $window) {
+    .controller('ContactsListController', ['ContactsService', '$window', function(ContactsService, $window) {
         var self;
         self = this;
         self.contacts = [];
-        ContactsStore.query().then(function(contacts) {
+        ContactsService.query().then(function(contacts) {
             self.contacts = contacts;
-        }, function(error) {
-            $log.log(error);
         });
         // jshint ignore:start
         // `delete` is a reserved word.
@@ -16,7 +14,7 @@ angular.module('contactsApp')
             var confirm;
             confirm = $window.confirm('Are you sure you want to delete ' + contact.first_name + ' ' + contact.last_name + '?');
             if (confirm) {
-                ContactsStore.delete(contact);
+                ContactsService.delete(contact);
             }
         };
         // jshint ignore:end
