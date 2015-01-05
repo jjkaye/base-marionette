@@ -1,6 +1,6 @@
 /*global angular */
 angular.module('contactsApp')
-    .controller('ContactsSingleCtrl', ['ContactsStore', '$routeParams', '$location', function(ContactsStore, $routeParams, $location) {
+    .controller('ContactsSingleController', ['ContactsStore', '$routeParams', '$location', function(ContactsStore, $routeParams, $location) {
         var self;
         self = this;
         ContactsStore.contactDetails($routeParams.id).then(function(response) {

@@ -32,7 +32,7 @@
     </head>
     <body ng-app="contactsApp">
         <div id="fb-root"></div>
-        <header class="header" ng-controller="HeaderCtrl as ctrl">
+        <header class="header" ng-controller="HeaderController as ctrl">
             <a href="/">Contacts <span ng-cloak>({{ ctrl.contacts.length }})</span></a>
         </header>
         <div ng-view></div>

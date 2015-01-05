@@ -1,6 +1,6 @@
 /*global angular */
 angular.module('contactsApp')
-    .controller('ContactsListCtrl', ['ContactsStore', '$log', '$filter', '$window', function(ContactsStore, $log, $filter, $window) {
+    .controller('ContactsListController', ['ContactsStore', '$log', '$filter', '$window', function(ContactsStore, $log, $filter, $window) {
         var self;
         self = this;
         self.contacts = [];

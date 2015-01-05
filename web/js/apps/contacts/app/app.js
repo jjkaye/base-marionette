@@ -4,11 +4,11 @@ angular.module('contactsApp', ['ngRoute'])
         $routeProvider
             .when('/', {
                 templateUrl: 'js/apps/contacts/app/contacts_list/contacts_list.html',
-                controller: 'ContactsListCtrl as ctrl'
+                controller: 'ContactsListController as ctrl'
             })
             .when('/contacts/:id', {
                 templateUrl: 'js/apps/contacts/app/contacts_single/contacts_single.html',
-                controller: 'ContactsSingleCtrl as ctrl'
+                controller: 'ContactsSingleController as ctrl'
             })
             .otherwise({
                 redirectTo: '/'
