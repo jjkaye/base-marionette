@@ -35,6 +35,15 @@ module.exports = function(grunt) {
                 command: './scssImport.sh'
             }
         },
+        karma: {
+            options: {
+                files: ['web/vendor/angular/angular.js', 'web/vendor/angular-mocks/angular-mocks.js', 'web/vendor/angular-route/angular-route.js', config.files.js.app.src, config.files.js.tests.unit]
+            },
+            unit: {
+                configFile: 'karma.conf.js',
+                background: true
+            }
+        },
         concat: {
             options: {
                 sourceMap: true
@@ -130,6 +139,10 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            karma: {
+                files: [config.files.js.app.src, config.files.js.tests.unit],
+                tasks: ['karma:unit:run']
+            },
             concat: {
                 files: config.files.js.app.src,
                 tasks: 'concat:js-app'
@@ -187,6 +200,7 @@ module.exports = function(grunt) {
     // vendor requirements are installed locally.
     // see: https://github.com/GoogleCloudPlatform/appengine-python-flask-skeleton/issues/1
     tasks = [
+        'karma:unit',
         'symlink:pre-commit-hook',
         'exec:write-scss-import-file',
         'sass',

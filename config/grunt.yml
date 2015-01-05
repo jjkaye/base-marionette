@@ -18,8 +18,11 @@ config:
                 src:
                     - web/js/apps/*/app/app.js
                     - web/js/apps/*/app/**/*.js
+                    - '!web/js/apps/*/app/**/*.test.js'
                 dest: web/build/app.js
                 destMin: web/build/app.min.js
+            tests:
+                unit: web/js/apps/*/app/**/*.test.js
             livereload: web/js/livereload.js
         scss:
             loadPaths:
