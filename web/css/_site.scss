@@ -12,3 +12,7 @@ body {
     font-size: $base-font-size;
     line-height: $base-line-height;
 }
+
+[ng-cloak] {
+    display: none !important;
+}

@@ -1,5 +1,3 @@
 .contacts-list {
-    li:nth-child(even) {
-        background-color: $gray;
-    }
+    @include padding(5px);
 }

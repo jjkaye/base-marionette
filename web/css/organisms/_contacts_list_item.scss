@@ -1,24 +1,7 @@
-.list-contact {
-    @include clearfix;
-    @include padding(10px);
+.contacts-list__item {
+    text-transform: capitalize;
 
-    .list-contact__avatar {
-        @include margin(null 20px null null);
-        @include size(60px);
-        float: left;
-    }
-
-    .list-contact__name {
-        float: left;
-        text-transform: capitalize;
-    }
-
-    .list-contact__delete {
+    .contacts-list__item__delete {
         color: $red;
-        float: right;
-    }
-
-    &.list-contact--empty {
-        text-align: center;
     }
 }

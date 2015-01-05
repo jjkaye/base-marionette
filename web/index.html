@@ -32,6 +32,9 @@
     </head>
     <body ng-app="contactsApp">
         <div id="fb-root"></div>
+        <header class="header" ng-controller="HeaderCtrl as ctrl">
+            <a href="/">Contacts <span ng-cloak>({{ ctrl.contacts.length }})</span></a>
+        </header>
         <div ng-view></div>
         <script src="/js/livereload.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>

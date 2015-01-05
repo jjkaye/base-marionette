@@ -152,7 +152,8 @@ module.exports = function(grunt) {
                 },
                 files: [].concat(
                     'web/css/main.css',
-                    config.files.js.app.src
+                    config.files.js.app.src,
+                    config.files.templates.watch
                 )
             },
             scssImport: {
