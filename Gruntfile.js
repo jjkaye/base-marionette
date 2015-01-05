@@ -47,6 +47,20 @@ module.exports = function(grunt) {
                 background: true
             }
         },
+        protractor: {
+            options: {
+                configFile: 'protractor.conf.js',
+                keepAlive: true,
+                args: {
+                    baseUrl: config.files.js.tests.e2e.baseUrl,
+                    specs: config.files.js.tests.e2e.specs,
+                    capabilities: {
+                        browserName: 'chrome'
+                    }
+                }
+            },
+            run: {}
+        },
         concat: {
             options: {
                 sourceMap: true
@@ -223,5 +237,5 @@ module.exports = function(grunt) {
 
     // Register task for testing
     // `grunt test`
-    grunt.registerTask('test', ['validate-code']);
+    grunt.registerTask('test', ['validate-code', 'protractor:run']);
 };

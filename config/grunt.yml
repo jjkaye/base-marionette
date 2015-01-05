@@ -26,6 +26,11 @@ config:
                         - web/vendor/angular-route/angular-route.js
                         - web/vendor/angular-animate/angular-animate.js
                         - web/js/apps/*/app/**/*.test.js
+                e2e:
+                    baseUrl: http://base-marionette.local,
+                    specs:
+                        - web/js/apps/contacts_app/test/*.js
+
             livereload: web/js/livereload.js
         scss:
             loadPaths:
